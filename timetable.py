@@ -2,11 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 
+
+
+
 driver = webdriver.Firefox()
 driver.get("http://timetable.student.curtin.edu.au/criteriaEntry.jsf")
 assert "Plan Your Timetable" in driver.title
-
-
 #clear search
 elem = driver.find_element_by_name("criteriaEntry:filterUnitCodeOrTitle")
 elem.clear()
@@ -27,12 +28,16 @@ srch.click()
 #get all units as csv
 allclass = driver.find_elements_by_xpath("//select[@name='criteriaEntry:allUnits']/option")
 #print(allclass)
+units = []
 for elm in allclass:
     split = elm.text.split(" ", 1)
 #    print(elm.get_attribute("value") + "," + split[0] + "," + split[1] )
     unit = (elm.get_attribute("value"), split[0], split[1] )
-    print(unit)
+    units.append(unit)
+    #print(unit)
     #print(elm.text)
+print(units)
+driver.close()
 
 
 
@@ -77,5 +82,4 @@ for i in classtimetable:
 
 
 
-driver.close()
 
