@@ -1,0 +1,12 @@
+the main things I want to work on are
+- persistant state
+- batch add multiple units (12) before viewing
+- multithreading/worker pool
+- dumping/cacheing the timetable pages
+- with the previous three i should be able to have
+    - a worker pool for downloading timetables
+    - use a worker pool using beautifulsoup4 for processing the timetables (this frees up selenium to download another page)
+- json output
+- some metadata about the staleness
+- an API
+- hosting
