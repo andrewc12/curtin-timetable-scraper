@@ -50,9 +50,21 @@ closedriver
 put htmllist in a queue
 
 while there are htmlitems in the queue
-	Beautifulsoup htmlitems
-	for every htmlitems unittable/tbody/tr (classtime)
-		collect all the columns for that row
-			append that and htmlitems.scrapetime to listofclasstimes
+	pool htmlitems processhtmlitem appendto listofclasstimes
+
+#if process can return multiple items then fix below
+#otherwise flatten from a list of lists of classtimes to
+#a list of classtimes
 
 export listofclasstimes
+
+
+
+submodule processhtmlitem
+	Beautifulsoup htmlitem
+	for every htmlitem unittable/tbody/tr (classtime)
+		collect all the columns for that row
+		append that and htmlitems.scrapetime to outputlist
+	return outputlist
+
+
