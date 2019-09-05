@@ -46,7 +46,7 @@ for elm in allclass:
     #print(elm.text)
 print(units)
 print(units , file=sys.stderr)
-driver.close()
+#driver.close()
 
 sleep(5)
 
@@ -64,7 +64,7 @@ for i in units:
 
 
     #driver = webdriver.Firefox()
-    driver = webdriver.Firefox(options=options)
+    #driver = webdriver.Firefox(options=options)
     driver.get("http://timetable.student.curtin.edu.au/criteriaEntry.jsf")
     assert "Plan Your Timetable" in driver.title
     #clear search
@@ -74,9 +74,12 @@ for i in units:
     #elem.send_keys(Keys.RETURN)
     #assert "No results found." not in driver.page_source
 
+    clear = driver.find_element_by_name("criteriaEntry:removeAllButton")
+    clear.click()
+
     #search for all units
-    srch = driver.find_element_by_name("criteriaEntry:unitSearchButton")
-    srch.click()
+    #srch = driver.find_element_by_name("criteriaEntry:unitSearchButton")
+    #srch.click()
 
 
 
@@ -89,7 +92,7 @@ for i in units:
     add.click()
 
     #clear all units
-    clear = driver.find_element_by_name("criteriaEntry:removeAllButton")
+    #clear = driver.find_element_by_name("criteriaEntry:removeAllButton")
 
 
     #view timetable
@@ -121,6 +124,9 @@ for i in units:
 
     sleep(1)
 
-    driver.close()
+#    driver.close()
 
     progress = progress + 1
+
+
+driver.close()
