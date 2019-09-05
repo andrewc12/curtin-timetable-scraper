@@ -17,14 +17,16 @@ the main things I want to work on are
 Generate new driver
 Do a search
 Get a list of units
+for each unit
+	read scrapetime of unit from disk
+	append metadata to list items
 dump unitlist to terminal
-
 put unitlist in a queue
 
 while there are unititems in the queue
 
 	while (you have collected less than 12 unititems AND there are unititems in the queue
-		Collect unititems from the queue
+		Collect unititems from the queue (if now - scrapetime is greater than staleness)
 	
 	tries = 1
 	while tries less equal than 3
@@ -35,7 +37,7 @@ while there are unititems in the queue
 				add unititem
 			
 				viewtimetable
-				append timetable body to htmllist	
+				append timetable body, scrapetime to htmllist	
 		catch
 			closedriver
 			sleep 10
@@ -43,6 +45,7 @@ while there are unititems in the queue
 			blank search
 			tries += 1
 
+closedriver
 	
 put htmllist in a queue
 
@@ -50,13 +53,6 @@ while there are htmlitems in the queue
 	Beautifulsoup htmlitems
 	for every htmlitems unittable/tbody/tr (classtime)
 		collect all the columns for that row
-			append to listofclasstimes
+			append that and htmlitems.scrapetime to listofclasstimes
 
-export listofclasstimes 
-
-		
-	
-
-
-
-
+export listofclasstimes
