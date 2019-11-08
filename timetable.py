@@ -5,6 +5,8 @@ from selenium.webdriver.firefox.options import Options
 from time import sleep
 import sys
 
+import csv
+
 def getallunits(driver):
     allclass = driver.find_elements_by_xpath("//select[@name='criteriaEntry:allUnits']/option")
     units = []
@@ -58,7 +60,7 @@ def viewtimetable(driver, classcode):
     view.click()
 
 
-def getdata(driver):
+def getdata(driver, csv):
     #get time table
     classtimetable = driver.find_elements_by_xpath("//table[@class='unitList']/tbody/tr")
     #classtimetable = driver.find_element_by_class_name("unitList")
@@ -70,6 +72,7 @@ def getdata(driver):
         comp_list = [j.text for j in i.find_elements_by_tag_name("td")]
         print(comp_list)
         print(comp_list  , file=sys.stderr)
+        csv.writerow(comp_list)
 
 
 
@@ -88,32 +91,33 @@ def main():
     sleep(5)
 
 
+    with open('units.csv', 'wt') as f:
+        csv_writer = csv.writer(f)
+
+        total = len(units) 
+        progress = 1
+
+        for i in units:
+        #    if (progress < 1116):
+        #        progress = progress + 1
+        #        continue
+            for count in range(3):
+                print("grabbing " + str(i[:]) + " " + str(progress) + " out of " + str(total)  , file=sys.stderr)
+                try:
+                    viewtimetable(driver, i)
+                    getdata(driver, csv_writer)
+                    break
+                except:
+                    driver.close()
+                    sleep(10)
+                    driver = webdriver.Firefox(options=options)
+                    blankandsearch(driver)
 
 
-    total = len(units) 
-    progress = 1
 
-    for i in units:
-    #    if (progress < 1116):
-    #        progress = progress + 1
-    #        continue
-        for count in range(3):
-            print("grabbing " + str(i[:]) + " " + str(progress) + " out of " + str(total)  , file=sys.stderr)
-            try:
-                viewtimetable(driver, i)
-                getdata(driver)
-                break
-            except:
-                driver.close()
-                sleep(10)
-                driver = webdriver.Firefox(options=options)
-                blankandsearch(driver)
-
-
-
-    #    driver.close()
-        #sleep(3)
-        progress = progress + 1
+        #    driver.close()
+            #sleep(3)
+            progress = progress + 1
 
 
     driver.close()
