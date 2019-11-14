@@ -26,7 +26,7 @@ worker_queue = Queue()
 # By default, make one selenium process per cpu core with cpu_count
 # TODO: Change the worker creation code to be your webworker of choice e.g. PhantomJS
 worker_ids = list(range(cpu_count()))
-selenium_workers = {i: webdriver.Chrome() for i in worker_ids}
+selenium_workers = {i: webdriver.Firefox() for i in worker_ids}
 for worker_id in worker_ids:
     worker_queue.put(worker_id)
 
